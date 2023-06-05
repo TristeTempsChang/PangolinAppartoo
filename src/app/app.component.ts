@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = "test"
+  hideHeaderFooter = true;
+
+  constructor(private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.hideHeaderFooter = event.url === '/login';
+        this.resetScrollPosition();
+      }
+    });
+  }
+
+  resetScrollPosition() {
+    window.scrollTo(0, 0);
+  }
 }

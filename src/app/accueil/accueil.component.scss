@@ -1,0 +1,30 @@
+.imageAccueil {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(90deg, rgba(43, 40, 40, 0.7) 0%, rgba(53, 47, 47, 0.7) 100%), url("https://img.freepik.com/photos-premium/mains-homme-affaires-codage-analyse-du-zoom-du-clavier-code-informatique-font-heures-supplementaires-date-limite-travail-nuit-programmation-mise-jour-du-logiciel-communication-programmeur_590464-134289.jpg?w=2000");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    color: white;
+    margin-top: 129px;
+    height: 440px; 
+    width: 100%;
+}
+
+#compte {
+    background-color: #614725;
+    border: 1px solid #614725;
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    transform: scale(1);
+    transition-property: transform;
+    transition-duration: 400ms;
+    &:hover {
+          transform: scale(1.09);
+    }
+}
