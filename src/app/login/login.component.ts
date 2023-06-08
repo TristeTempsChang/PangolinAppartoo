@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private conService: ConnexionService,
               private http: HttpClient,
+              private router: Router,
               private formBuilder: FormBuilder) {
                 this.registerForm = this.formBuilder.group({
                   username: ['', Validators.required],
@@ -72,7 +74,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('userId', userId);
           localStorage.setItem('token', token);
 
-          console.log('LOGIN MARCHE')
+          this.router.navigateByUrl('user');
         },
         error => {
           console.error(error);

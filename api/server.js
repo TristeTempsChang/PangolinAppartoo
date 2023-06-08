@@ -28,6 +28,7 @@ router.route('/login')
 
 router.route('/user')
     .post(authenticationController.postUser)
+    .get(authenticationController.getUser)
 
 app.use('/api', router);
 

@@ -12,7 +12,7 @@ export class AppComponent {
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.hideHeaderFooter = event.url === '/login';
+        this.hideHeaderFooter = event.url === '/login' || event.url === '/user';
         this.resetScrollPosition();
       }
     });

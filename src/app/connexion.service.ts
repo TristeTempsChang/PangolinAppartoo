@@ -13,6 +13,14 @@ export class ConnexionService {
   }
 
   userTest() {
-    
+    return this.http.get<any>('http://localhost:3000/api/user').pipe(
+      map(response => response.data as userModel[])
+    ).subscribe(userData => {
+      console.log(userData)
+      userData.forEach(element => {
+        console.log(element.username);
+        console.log(element.password);
+      })
+    });
   }
 }
