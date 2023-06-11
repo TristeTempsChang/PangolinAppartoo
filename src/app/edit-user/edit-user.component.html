@@ -1,0 +1,73 @@
+<div class="ensembleEdit">
+    <p-panel header="Mes informations">
+        <form [formGroup]="updateForm">
+            <div class="userInformation">
+                <p style="color: rgb(155, 155, 155)">Information utilisateur</p>
+                <div class="ensembleInput">
+                    <div class="first">
+                        <div class="inputUser">
+                            <label for="email" style="font-weight: bold; color: grey;">Adresse e-mail</label>
+                            <br />
+                            <input class="inputAll" [(ngModel)]="email" pInputText formControlName="email" style="margin-top: 10px;" name="email">
+                        </div>
+                    </div>
+                    <br />
+                    <div class="first">
+                        <div class="inputUser">
+                            <label for="lastmane" style="font-weight: bold; color: grey;">Prénom</label>
+                            <br />
+                            <input pInputText class="inputAll"  [(ngModel)]="prenom" formControlName="prenom" style="margin-top: 10px;" name="lastname">
+                        </div>
+                        <div class="inputUser">
+                            <label for="firstname" style="font-weight: bold; color: grey;">Nom</label>
+                            <br />
+                            <input pInputText formControlName="nom" [(ngModel)]="nom" class="inputAll" style="margin-top: 10px;" name="firstname">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="userInformation">
+                <p style="color: rgb(155, 155, 155)">Informations de contact</p>
+                <div class="ensembleInput">
+                    <div class="inputUser">
+                        <label for="adresse" style="font-weight: bold; color: grey;">Adresse</label>
+                        <br />
+                        <input class="inputAdresse" [(ngModel)]="adresse" pInputText formControlName="adresse" style="margin-top: 10px;" name="adresse">
+                    </div>
+                    <br />
+                    <div class="first">
+                        <div class="inputUser">
+                            <label for="username" style="font-weight: bold; color: grey;">Ville</label>
+                            <br />
+                            <input pInputText [(ngModel)]="ville" formControlName="ville" style="margin-top: 10px;" class="inputAll" name="username">
+                        </div>
+                        <div class="inputUser">
+                            <label for="email" style="font-weight: bold; color: grey;">Pays</label>
+                            <br />
+                            <input pInputText [(ngModel)]="pays" formControlName="pays" style="margin-top: 10px;" name="email" class="inputAll">
+                        </div>
+                        <div class="inputUser">
+                            <label for="email" style="font-weight: bold; color: grey;">Code postal</label>
+                            <br />
+                            <input pInputText [(ngModel)]="codePostal" formControlName="codePostal" style="margin-top: 10px;" name="email">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="userInformation">
+                <p style="color: rgb(155, 155, 155)">A propos de moi</p>
+                <div class="ensembleInput">
+                    <textarea rows="5" cols="158" [(ngModel)]="bio" pInputTextarea formControlName="bio"></textarea>
+                </div>
+            </div>
+            <br />
+            <button (click)="onSubmit()" pButton style="background-color: #614725; border: 1px solid #614725;"><i class="pi pi-save" style="margin-right: 10px;"></i>Enregistrer les changements</button>
+            <br />
+            <br />
+            <button pButton (click)="onDelete()" style="background-color: red; border: 1px solid red;"><i class="pi pi-trash" style="margin-right: 10px;"></i>Supprimer l'utilisateur</button>
+        </form>
+    </p-panel>
+</div>
+
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>

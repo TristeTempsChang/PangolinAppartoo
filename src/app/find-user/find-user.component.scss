@@ -1,0 +1,48 @@
+.findboard {
+    margin-top: 150px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 1;
+    border: solid 1px #dee2e6;
+    border-radius: 10px;
+}
+
+.ensembleBlocList {
+    display: flex;
+    padding: 1.5rem;
+    justify-content: space-between;
+}
+
+.ensembleBlocInfo {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.emsembleTexte {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.ensembleBtn {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.ensembleFooter {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.EnsembleFicheUser {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-bottom: 1px solid lightgray;
+}

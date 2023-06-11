@@ -4,12 +4,17 @@ import { AccueilComponent } from './accueil/accueil.component';
 import { LoginComponent } from './login/login.component';
 import { UserPageComponent } from './user-page/user-page.component';
 import { FindUserComponent } from './find-user/find-user.component';
+import { QuiSommesNousComponent } from './qui-sommes-nous/qui-sommes-nous.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { AuthGuard } from './guard/auth.guard';
 
 const routes: Routes = [
   { path: '', component: AccueilComponent},
-  { path: 'login', component: LoginComponent},
-  { path: 'user', component: UserPageComponent},
-  { path: 'user/findFriend', component: FindUserComponent}
+  { path: 'whoAreWe', component: QuiSommesNousComponent},
+  { path: 'login', component: LoginComponent },
+  { path: 'user', component: UserPageComponent, canActivate: [AuthGuard]},
+  { path: 'user/findFriend', component: FindUserComponent, canActivate: [AuthGuard]},
+  { path: 'user/editUser', component: EditUserComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

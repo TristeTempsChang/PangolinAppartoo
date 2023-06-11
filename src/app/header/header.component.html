@@ -5,11 +5,16 @@
             <h3 style="margin-left: 20px;">Pangolin</h3>
         </div>
         <div class="menu">
-            <a class="menuText" style="border-right: solid 2px rgb(134, 134, 134); padding-right: 2rem;">Qui sommes-nous ?</a>
-            <a routerLink="login" class="menuText" id="compte">
+            <a class="menuText" routerLink="whoAreWe" *ngIf="!authenticate" style="border-right: solid 2px rgb(134, 134, 134); padding-right: 2rem;">Qui sommes-nous ?</a>
+            <a routerLink="user" class="menuText" id="compte" *ngIf="!authenticate">
                 <i class="pi pi-user" style="margin-right: 5px;"></i>
                 Espace compte
             </a>
+            <a class="menuText" routerLink="user" *ngIf="authenticate" style="border-right: solid 2px rgb(134, 134, 134); padding-right: 2rem;">Retour au menu</a>
+            <div class="user" *ngIf="authenticate">
+                <p-avatar icon="pi pi-user" shape="circle" style="margin: 0 1.2rem 0;" styleClass="mr-2"></p-avatar>
+                <p style="margin-right: 20px;">{{username}}</p>
+            </div>
         </div>
     </div>
 </header>

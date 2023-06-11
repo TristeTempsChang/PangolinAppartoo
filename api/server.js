@@ -3,6 +3,7 @@ var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 
 var authenticationController = require("./controllers/authentication");
+var auth = require("./middleware/token")
 
 mongoose.connect('mongodb+srv://admin:admin@cluster0.aw7iryy.mongodb.net/?retryWrites=true&w=majority')
 .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -29,6 +30,11 @@ router.route('/login')
 router.route('/user')
     .post(authenticationController.postUser)
     .get(authenticationController.getUser)
+
+router.route('/userById/:user_id')
+    .get(authenticationController.getUserById)
+    .post(authenticationController.updateUser)
+    .delete(authenticationController.deleteUser)
 
 app.use('/api', router);
 

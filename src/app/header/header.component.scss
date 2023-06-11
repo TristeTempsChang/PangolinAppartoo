@@ -14,7 +14,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 999px;
+    z-index: 2;
     box-shadow: 0px 0px 6px 0px rgba(26, 26, 26, 0.5);
 }
 
@@ -28,12 +28,22 @@
 }
 
 .menu {
-    margin-right: 10px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .menuText {
     margin: 0 1.2rem 0;
     font-size: 1rem;
+    color: white;
+    text-decoration: none;
+}
+
+.user {
+    display: flex;
+    align-items: center;
 }
 
 #compte {

@@ -1,1 +1,39 @@
-<p>find-user works!</p>
+<div class="findboard">
+    <p-dataView #dv [value]="userData" [rows]="5" [paginator]="true">
+        <ng-template pTemplate="header">
+            <div class="headerEnsemble">
+
+                <div class="ensembleBtnHeader">
+                    <button pButton style="background-color: black; border: 1px solid black;" icon="pi pi-undo"></button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template let-user pTemplate="listItem">
+            <div class="col-12">
+                <div class="ensembleBlocList">
+                    <div class="ensembleBlocInfo">
+                        <p-avatar label="P" class="custom-avatar" size="xlarge" shape="circle"></p-avatar>
+                        <div class="emsembleTexte">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: black;">{{ user.username }}</div>
+                            <div>
+                                <p-chip>
+                                    <div style="padding: 3px;">{{user.status}}</div>
+                                </p-chip>
+                            </div>
+                            <span>{{truncateText(user.bio, 50)}}</span>
+                        </div>
+                    </div>
+                        <div class="ensembleFooter">
+                            <div class="ensembleBtn">
+                                <div style="font-size: 1rem; font-weight: 700;">Ajouter en ami</div>
+                                <button (click)="AddFriend()" style="background-color: green; border: 1px solid green;" pButton icon="pi pi-user-plus"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </ng-template>
+    </p-dataView>
+</div>
+
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>

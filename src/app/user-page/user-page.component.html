@@ -8,22 +8,31 @@
             <div class="menu">
                 <div class="itemUser">
                     <a routerLink="findFriend" style="border-right: solid 2px rgb(134, 134, 134); padding-right: 2rem; text-decoration: none; color: white;">Trouver des pangolins</a>
-                    <i class="pi pi-bell text-3xl" style="margin: 0 1.2rem 0; font-size: 1rem;" pBadge value="2"></i>
-                </div>
+                        <p-overlayPanel #op>
+                            <ng-container *ngIf="notifService.showNotification">
+                                <p>Ajout en ami effectué avec succès !</p>
+                              </ng-container>
+                              <ng-container *ngIf="!notifService.showNotification">
+                                <p>Vous n'avez aucune notification pour l'instant...</p>
+                              </ng-container>
+                        </p-overlayPanel>
+                        <i class="pi pi-bell text-3xl" (click)="op.toggle($event)" *ngIf="notifService.showNotification" style="margin: 0 1.2rem 0; font-size: 1rem;" pBadge></i>
+                        <i class="pi pi-bell text-3xl" (click)="op.toggle($event)" *ngIf="!notifService.showNotification" style="margin: 0 1.2rem 0; font-size: 1rem;"></i>
+                    </div>
                 <div class="user">
-                    <p-avatar icon="pi pi-user" shape="circle" style="margin: 0 1.2rem 0; font-size: 1rem;" styleClass="mr-2"></p-avatar>
-                    <p style="margin-right: 20px;">Utilisateur2111</p>
-                    <i class="pi pi-sign-out"></i>
+                    <p-avatar icon="pi pi-user" shape="circle" style="margin: 0 1.2rem 0;" styleClass="mr-2"></p-avatar>
+                    <p style="margin-right: 20px;">{{username}}</p>
+                    <i class="pi pi-sign-out" style="cursor: pointer;" (click)="deconnexion()"></i>
                 </div>
             </div>
         </div>
         <div class="texteBienvenue">
-            <h1 style="font-size: 3rem;">Bonjour Utilisateur</h1>
+            <h1 style="font-size: 3rem;">Bonjour {{username}}</h1>
             <p>C'est ta page utilisateur, ici tu peux ajouter des contacts, modifer tes informations et même ton statut !</p>
             <br />
             <br />
             <br />
-            <a href="https://www.primefaces.org/primeng-v15-lts/icons" id="compte">
+            <a routerLink="editUser" id="compte">
                 Éditer mon profil
             </a>
         </div>
@@ -38,12 +47,12 @@
                     <div class="inputUser">
                         <label for="username" style="font-weight: bold; color: grey;">Username</label>
                         <br />
-                        <input class="inputAll" pInputText [disabled]="true" style="margin-top: 10px;" name="username">
+                        <input class="inputAll" [(ngModel)]="username" pInputText [disabled]="true" style="margin-top: 10px;" name="username">
                     </div>
                     <div class="inputUser">
-                        <label for="email" style="font-weight: bold; color: grey;">Adresse e-mail</label>
+                        <label for="email" style="font-weight: bold; color: #808080;">Adresse e-mail</label>
                         <br />
-                        <input class="inputAll" pInputText [disabled]="true" style="margin-top: 10px;" name="email">
+                        <input class="inputAll" pInputText [(ngModel)]="email" [disabled]="true" style="margin-top: 10px;" name="email">
                     </div>
                 </div>
                 <br />
@@ -51,12 +60,12 @@
                     <div class="inputUser">
                         <label for="lastmane" style="font-weight: bold; color: grey;">Prénom</label>
                         <br />
-                        <input pInputText class="inputAll" [disabled]="true" style="margin-top: 10px;" name="lastname">
+                        <input pInputText class="inputAll" [(ngModel)]="prenom" [disabled]="true" style="margin-top: 10px;" name="lastname">
                     </div>
                     <div class="inputUser">
                         <label for="firstname" style="font-weight: bold; color: grey;">Nom</label>
                         <br />
-                        <input pInputText [disabled]="true" class="inputAll" style="margin-top: 10px;" name="firstname">
+                        <input pInputText [disabled]="true" [(ngModel)]="nom" class="inputAll" style="margin-top: 10px;" name="firstname">
                     </div>
                 </div>
             </div>
@@ -67,24 +76,24 @@
                 <div class="inputUser">
                     <label for="adresse" style="font-weight: bold; color: grey;">Adresse</label>
                     <br />
-                    <input class="inputAdresse" pInputText [disabled]="true" style="margin-top: 10px;" name="adresse">
+                    <input class="inputAdresse" pInputText [(ngModel)]="adresse" [disabled]="true" style="margin-top: 10px;" name="adresse">
                 </div>
                 <br />
                 <div class="first">
                     <div class="inputUser">
                         <label for="username" style="font-weight: bold; color: grey;">Ville</label>
                         <br />
-                        <input pInputText [disabled]="true" style="margin-top: 10px;" class="inputAll" name="username">
+                        <input pInputText [disabled]="true" [(ngModel)]="ville" style="margin-top: 10px;" class="inputAll" name="username">
                     </div>
                     <div class="inputUser">
                         <label for="email" style="font-weight: bold; color: grey;">Pays</label>
                         <br />
-                        <input pInputText [disabled]="true" style="margin-top: 10px;" name="email" class="inputAll">
+                        <input pInputText [disabled]="true" [(ngModel)]="pays" style="margin-top: 10px;" name="email" class="inputAll">
                     </div>
                     <div class="inputUser">
                         <label for="email" style="font-weight: bold; color: grey;">Code postal</label>
                         <br />
-                        <input pInputText [disabled]="true" style="margin-top: 10px;" name="email">
+                        <input pInputText [disabled]="true" [(ngModel)]="codePostal" style="margin-top: 10px;" name="email">
                     </div>
                 </div>
             </div>
@@ -92,7 +101,7 @@
         <div class="userInformation">
             <p style="color: rgb(155, 155, 155)">A propos de moi</p>
             <div class="ensembleInput">
-                <textarea rows="5" cols="110" pInputTextarea [disabled]="true"></textarea>
+                <textarea rows="5" cols="110" pInputTextarea [(ngModel)]="bio" [disabled]="true"></textarea>
             </div>
         </div>
     </p-panel>
@@ -107,9 +116,32 @@
             </div>
             <br />
             <p style="font-size: 1.2rem;">
-                <strong>Utilisateur2111</strong>
+                <strong>{{username}}</strong>
             </p>
-            <p-chip label="Guerrier"></p-chip>
+            <div>
+                <p-overlayPanel #stat>
+                    <ng-template pTemplate="content">
+                        <p-chip (click)="guerrier()">
+                            <div style="padding: 3px; cursor: pointer;">Guerrier</div>
+                        </p-chip>
+                        <p-chip (click)="Alchimiste()">
+                            <div style="padding: 3px; cursor: pointer;">Alchimiste</div>
+                        </p-chip>
+                        <p-chip (click)="Sorcier()">
+                            <div style="padding: 3px; cursor: pointer;">Sorcier</div>
+                        </p-chip>
+                        <p-chip (click)="Espions()">
+                            <div style="padding: 3px; cursor: pointer;">Espions</div>
+                        </p-chip>
+                        <p-chip (click)="Enchanteur()">
+                            <div style="padding: 3px; cursor: pointer;">Enchanteur</div>
+                        </p-chip>
+                    </ng-template>
+                </p-overlayPanel>
+                <p-chip (click)="stat.toggle($event)" style="cursor: pointer;">
+                    <div style="padding: 3px;">{{status}}</div>
+                </p-chip>
+            </div>
         </div>
     </p-card>
 </div>
