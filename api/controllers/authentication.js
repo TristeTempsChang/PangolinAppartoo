@@ -104,4 +104,81 @@ exports.deleteUser = function(req,res) {
        res.status(200).json({ success: true, message: "L'utilisateur a été supprimé avec succès"}).status(200);
 }
 
-////////////////////////////
+exports.addFriend = function(req, res) {
+    const userId = req.params.user_id;
+    const friendId = req.body.friendId;
+  
+    Users.findById(userId)
+      .then(user => {
+        if (!user) {
+          return res.status(404).json({ message: 'Utilisateur introuvable' });
+        }
+  
+        Users.findById(friendId)
+          .then(friend => {
+            if (!friend) {
+              return res.status(404).json({ message: 'Ami introuvable' });
+            }
+  
+            if (user.friends.includes(friendId)) {
+              return res.status(400).json({ message: 'Cet ami est déjà ajouté' });
+            }
+  
+            user.friends.push(friendId);
+            friend.friends.push(userId);
+  
+            Promise.all([user.save(), friend.save()])
+              .then(([savedUser]) => {
+                res.status(200).json({ success: true, message: "Ami ajouté avec succès", data: savedUser });
+              })
+              .catch(err => {
+                res.status(500).json({ success: false, message: err });
+              });
+          })
+          .catch(error => res.status(500).json({ error }));
+      })
+      .catch(error => res.status(500).json({ error }));
+  };
+
+  exports.removeFriend = function(req, res) {
+    const userId = req.params.user_id;
+    const friendId = req.params.friend_id;
+  
+    Users.findById(userId)
+      .then(user => {
+        if (!user) {
+          return res.status(404).json({ message: 'Utilisateur introuvable' });
+        }
+  
+        Users.findById(friendId)
+          .then(friend => {
+            if (!friend) {
+              return res.status(404).json({ message: 'Ami introuvable' });
+            }
+  
+            const friendIndex = user.friends.indexOf(friendId);
+            if (friendIndex === -1) {
+              return res.status(400).json({ message: 'Cet ami n\'est pas dans votre liste d\'amis' });
+            }
+  
+            user.friends.splice(friendIndex, 1);
+  
+            const userIndex = friend.friends.indexOf(userId);
+            if (userIndex === -1) {
+              return res.status(400).json({ message: 'Vous n\'êtes pas dans la liste d\'amis de cet utilisateur' });
+            }
+  
+            friend.friends.splice(userIndex, 1);
+  
+            Promise.all([user.save(), friend.save()])
+              .then(([savedUser, savedFriend]) => {
+                res.status(200).json({ success: true, message: "Ami supprimé avec succès", data: savedUser });
+              })
+              .catch(err => {
+                res.status(500).json({ success: false, message: err });
+              });
+          })
+          .catch(error => res.status(500).json({ error }));
+      })
+      .catch(error => res.status(500).json({ error }));
+  };

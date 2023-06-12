@@ -3,6 +3,7 @@ import { ConnexionService } from '../connexion.service';
 import { Router } from '@angular/router';
 import { AuthGuard } from '../guard/auth.guard';
 import { NotifService } from '../notif.service';
+import { userModel } from '../models/user.model';
 
 @Component({
   selector: 'app-user-page',
@@ -14,6 +15,8 @@ export class UserPageComponent implements OnInit{
   logoUrl!: string;
   footerDate!: Date;
   friendNum!: Number;
+  visible!: boolean;
+  userData!: userModel[];
 
   userId: any;
   username: any;
@@ -27,6 +30,7 @@ export class UserPageComponent implements OnInit{
   pays: any;
   codePostal: any;
   bio: any;
+  friends: any;
 
   constructor(private conService: ConnexionService,
               private router: Router,
@@ -45,17 +49,30 @@ export class UserPageComponent implements OnInit{
             this.pays = data.pays;
             this.codePostal = data.codePostal;
             this.bio = data.bio;
+            this.friends = data.friends;
+        })
+
+        this.conService.getUser().subscribe((data) => {
+          this.userData = data.filter(user => user.friends.includes(this.userId));
+          console.log(data)
         })
   }
 
   ngOnInit(): void {
     this.logoUrl = "../assets/pangolinLogo.png";
     this.footerDate = new Date();
-    this.friendNum = 0;
+  }
+
+  truncateText(text: string, maxLength: number): string {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + '...';
+    }
+    return text;
   }
 
   guerrier(){
     const formData = {
+      _id: this.userId,
       username: this.username,
       password: this.password,
       status: "Guerrier",
@@ -67,6 +84,7 @@ export class UserPageComponent implements OnInit{
       pays: this.pays,
       codePostal: this.codePostal,
       bio: this.bio,
+      friends: this.friends
     };
 
     this.conService.updateUser(this.userId, formData)
@@ -75,6 +93,7 @@ export class UserPageComponent implements OnInit{
 
   Alchimiste(){
     const formData = {
+      _id: this.userId,
       username: this.username,
       password: this.password,
       status: "Alchimiste",
@@ -86,6 +105,7 @@ export class UserPageComponent implements OnInit{
       pays: this.pays,
       codePostal: this.codePostal,
       bio: this.bio,
+      friends: this.friends
     };
 
     this.conService.updateUser(this.userId, formData)
@@ -94,6 +114,7 @@ export class UserPageComponent implements OnInit{
 
   Sorcier(){
     const formData = {
+      _id: this.userId,
       username: this.username,
       password: this.password,
       status: "Sorcier",
@@ -105,6 +126,7 @@ export class UserPageComponent implements OnInit{
       pays: this.pays,
       codePostal: this.codePostal,
       bio: this.bio,
+      friends: this.friends
     };
 
     this.conService.updateUser(this.userId, formData)
@@ -113,6 +135,7 @@ export class UserPageComponent implements OnInit{
 
   Espions(){
     const formData = {
+      _id: this.userId,
       username: this.username,
       password: this.password,
       status: "Espions",
@@ -124,6 +147,7 @@ export class UserPageComponent implements OnInit{
       pays: this.pays,
       codePostal: this.codePostal,
       bio: this.bio,
+      friends: this.friends
     };
 
     this.conService.updateUser(this.userId, formData)
@@ -132,6 +156,7 @@ export class UserPageComponent implements OnInit{
 
   Enchanteur(){
     const formData = {
+      _id: this.userId,
       username: this.username,
       password: this.password,
       status: "Enchanteur",
@@ -143,6 +168,7 @@ export class UserPageComponent implements OnInit{
       pays: this.pays,
       codePostal: this.codePostal,
       bio: this.bio,
+      friends: this.friends
     };
 
     this.conService.updateUser(this.userId, formData)
@@ -153,6 +179,15 @@ export class UserPageComponent implements OnInit{
     this.conService.removeToken();
     this.conService.removeID();
     this.authGuard.authenticate = false;
-    this.router.navigateByUrl('');
+    window.location.href = '';
+  }
+
+    showFriend() {
+      this.visible = true;
+  }
+
+  deleteFriend(friendId: string){
+    this.notifService.removeFriend(this.userId, friendId);
+    window.location.href = '/user';
   }
 }

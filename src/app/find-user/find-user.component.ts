@@ -12,27 +12,37 @@ import { NotifService } from '../notif.service';
 })
 export class FindUserComponent {
 
-  userData: userModel[]=[];
+  userData!: userModel[];
   userId: any;
+  friendId: any;
+  friendOfCurrentUser: any;
 
   constructor(private connexionService: ConnexionService,
               private confirmationService: ConfirmationService,
               private notifService: NotifService,
               private messageService: MessageService){
+      this.userId = this.connexionService.getId();
+      this.connexionService.getUserById(this.userId).subscribe((dataCurrent) => {
+        this.friendOfCurrentUser = dataCurrent.friends;
+        console.log(this.friendOfCurrentUser.includes(this.userId));
+      })
       this.connexionService.getUser().subscribe((data) => {
-        console.log(data);
-        this.userData = data;
+        this.userData = data.filter(user => !user.friends.includes(this.userId));
+        console.log(data)
       })
   }
 
-  AddFriend() {
+  AddFriend(friendId: string) {
     this.confirmationService.confirm({
         message: 'Voulez-vous ajouter ce pangolin dans votre liste de pangolins ?',
         header: 'Confirmation',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
           this.notifService.showNotification = true;
-          this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
+          console.log(friendId)
+          this.notifService.AddFriend(this.userId, friendId);
+          this.messageService.add({ severity: 'success', summary: 'Confirmation', detail: 'Utilisateur ajouté !' });
+          window.location.href = '/user/findFriend';
         },
         reject: () => {
           
@@ -45,5 +55,9 @@ export class FindUserComponent {
       return text.substring(0, maxLength) + '...';
     }
     return text;
+  }
+
+  isCurrentUser(user: userModel): boolean {
+    return user._id === this.userId;
   }
 }

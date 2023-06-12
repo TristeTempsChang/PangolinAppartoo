@@ -68,8 +68,24 @@ export class LoginComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: "Le mot de passe et sa confirmation ne correspondent pas..." });
       } else {
         this.http.post("http://localhost:3000/api/user", formData,{responseType: "text"}).subscribe((resultData: any) => {
-          this.messageService.add({ severity: 'success', summary: 'Ajouté !', detail: 'Utilisateur inscrit avec succès' });
-          this.registerForm.reset();
+          this.http.post<any>('http://localhost:3000/api/login', formData)
+          .subscribe(
+          response => {
+            const token = response.token;
+            const userId = response.userId;
+    
+            localStorage.setItem('token', token);
+            localStorage.setItem('userId', userId);
+            console.log(token);
+            console.log(userId);
+    
+            this.router.navigateByUrl('user');
+          },
+          error => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: "Une erreur est survenue" });
+            console.error(error);
+          }
+        );
       })
     }
   }

@@ -36,6 +36,12 @@ router.route('/userById/:user_id')
     .post(authenticationController.updateUser)
     .delete(authenticationController.deleteUser)
 
+router.route('/addFriend/:user_id')
+    .post(authenticationController.addFriend);
+
+router.route('/removeFriend/:user_id/:friend_id')
+    .delete(authenticationController.removeFriend);
+
 app.use('/api', router);
 
 app.listen(port);

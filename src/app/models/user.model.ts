@@ -1,4 +1,5 @@
 export class userModel {
+    _id: string;
     username: string;
     password: string;
     status: string;
@@ -10,10 +11,12 @@ export class userModel {
     pays: string;
     codePostal: string;
     bio: string;
+    friends: string[];
     
-    constructor(username: string, password: string, status: string, email:string, 
+    constructor(_id: string,username: string, password: string, status: string, email:string, 
                 prenom: string, nom: string, adresse: string, ville: string, 
-                pays: string, codePostal: string, bio: string) {
+                pays: string, codePostal: string, bio: string, friends: string[]) {
+      this._id = _id;
       this.username = username;
       this.password = password;
       this.status = status;
@@ -25,5 +28,6 @@ export class userModel {
       this.pays = pays;
       this.codePostal = codePostal;
       this.bio = bio;
+      this.friends = friends;
     }
 }

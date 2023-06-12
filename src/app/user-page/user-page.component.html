@@ -107,12 +107,12 @@
     </p-panel>
     <p-card>
         <div class="EnsembleFicheUser">
-            <p-avatar label="P" class="custom-avatar" size="xlarge" shape="circle"></p-avatar>
+            <p-avatar icon="pi pi-user" class="custom-avatar" size="xlarge" shape="circle"></p-avatar>
             <br />
             <br />
             <div>
-                <p>{{friendNum}}</p>
-                <p style="color: rgb(155, 155, 155)">Pangolins</p>
+                <p>{{friends.length}}</p>
+                <p style="color: rgb(155, 155, 155); cursor: pointer;" (click)="showFriend()">Pangolins</p>
             </div>
             <br />
             <p style="font-size: 1.2rem;">
@@ -155,3 +155,40 @@
         <p>Pangolin &copy; {{footerDate | date: 'yyyy'}}</p>
     </div>
 </footer>
+
+<p-dialog header="Pangolins" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+    <p-dataView #dv [value]="userData" [rows]="5" [paginator]="true">
+        <ng-template pTemplate="header">
+            <div class="headerEnsemble">
+
+                <div class="ensembleBtnHeader">
+                    
+                </div>
+            </div>
+        </ng-template>
+        <ng-template let-user pTemplate="listItem">
+            <div class="col-12">
+                <div class="ensembleBlocList">
+                    <div class="ensembleBlocInfo">
+                        <p-avatar icon="pi pi-user" class="custom-avatar" size="xlarge" shape="circle"></p-avatar>
+                        <div class="emsembleTexte">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: black;">{{ user.username }}</div>
+                            <div>
+                                <p-chip>
+                                    <div style="padding: 3px;">{{user.status}}</div>
+                                </p-chip>
+                            </div>
+                            <span>{{truncateText(user.bio, 50)}}</span>
+                        </div>
+                    </div>
+                        <div class="ensembleFooter">
+                            <div class="ensembleBtn">
+                                <div style="font-size: 1rem; font-weight: 700;">Supprimer de la liste d'ami</div>
+                                <button (click)="deleteFriend(user._id)" style="background-color: red; border: 1px solid red;" pButton icon="pi pi-user-plus"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </ng-template>
+    </p-dataView>
+</p-dialog>

@@ -112,6 +112,32 @@ p-panel {
     text-align: center;
 }
 
+.ensembleBlocList {
+  display: flex;
+  padding: 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ensembleBlocInfo {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.emsembleTexte {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.ensembleBtn {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
 ////////////////////////////////////////////////////////////////////
 // Partie Footer
 

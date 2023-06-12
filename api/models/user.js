@@ -12,7 +12,8 @@ var userSchema = mongoose.Schema({
   ville: {type: String},
   pays: {type: String},
   codePostal: {type: String},
-  bio: {type: String}
+  bio: {type: String},
+  friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });
 
 module.exports = mongoose.model('Users', userSchema);
